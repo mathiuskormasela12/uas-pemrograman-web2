@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Warga;
+use App\Models\HargaSampah;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -29,7 +32,25 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('admin.layout.home-content');
+        $results = DB::table('harga_sampahs')->get();
+        $data = [
+            "title" => "Hello World",
+            "results" => $results,
+            "length" => sizeOf($results)
+        ];
+
+        return view('admin.layout.home-content', $data);
+    }
+
+    public function riwayat_transaksi()
+    {
+        $results = DB::table('transaksis')->select('transaksis.created_at', 'transaksis.nama_nasabah', 'harga_sampahs.jenis_sampah','transaksis.status')->join('harga_sampahs', 'harga_sampahs.id', '=', 'transaksis.jenis_sampah_id')->get();
+        $data = [
+            "results" => $results,
+            "length" => sizeOf($results)
+        ];
+
+        return view('admin.layout.transaksi', $data);
     }
 
     /**
@@ -44,7 +65,7 @@ class HomeController extends Controller
         $data['warga'] = Warga::all();
          return view('admin.layout.datawarga-layout',$data);
      }
-     
+
     public function create()
     {
         return view('admin.layout.insert-data');

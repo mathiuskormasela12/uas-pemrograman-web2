@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+    database:
+        container_name: database
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: "admin"
+        ports:
+            - protocol: tcp
+              published: 1234
+              target: 3306

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function(){
 Route::get('/',[App\Http\Controllers\HomeController::class,'index']);
+Route::get('/riwayat',[App\Http\Controllers\HomeController::class,'riwayat_transaksi']);
 Route::get('/1',[App\Http\Controllers\HomeController::class,'dashboard']);
 Route::get('/admin/datawarga',[App\Http\Controllers\HomeController::class,'datawarga'])->name('warga.data');
 Route::get('/admin/insert-data',[App\Http\Controllers\HomeController::class,'create']);
